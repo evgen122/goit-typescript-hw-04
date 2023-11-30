@@ -3,9 +3,15 @@
 import React, {useReducer} from "react";
 
 type State = {
-  isRequestInProgress: boolean;
-  requestStep: string;
+  isRequestInProgress: false | true;
+  requestStep: "start" | "pending" | "finished" | "idle";
 };
+
+// type Action =
+// | { tipe: "START_REQUEST" }
+// | { tipe: "PENDING_REQUEST" }
+// | { tipe: "FINISH_REQUEST" }
+// | { tipe: "RESET_REQUEST" };
 
 type Action = {
   type:
@@ -35,7 +41,7 @@ function requestReducer(state: State, action: Action): State {
   }
 }
 
-export function RequestComponent() {
+export function RequestComponent(): JSX.Element {
   const [requestState, requestDispatch] = useReducer(
     requestReducer,
     initialState
