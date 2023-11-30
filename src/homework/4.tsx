@@ -5,17 +5,18 @@ import noop from "lodash/noop";
 
 type MenuIds = "first" | "second" | "last";
 type Menu = {id: MenuIds; title: string};
+type SelectedMenu = {id: MenuIds};
 
 // Додати тип Menu Selected
-type MenuSelected = {selectedMenu: {id?: MenuIds}};
+type MenuSelected = {selectedMenu: SelectedMenu};
 
 const MenuSelectedContext = createContext<MenuSelected>({
-  selectedMenu: {},
+  selectedMenu: {} as SelectedMenu,
 });
 
 // Додайте тип MenuAction
 type MenuAction = {
-  onSelectedMenu: (...args: SelectedMenu[]) => void;
+  onSelectedMenu: (id: SelectedMenu) => void;
 };
 
 const MenuActionContext = createContext<MenuAction>({
@@ -26,12 +27,12 @@ type PropsProvider = {
   children: React.ReactElement; // Додати тип для children
 };
 
-type SelectedMenu = {id: MenuIds};
-
 function MenuProvider({children}: PropsProvider) {
   // Додати тип для SelectedMenu він повинен містити { id }
 
-  const [selectedMenu, setSelectedMenu] = useState<SelectedMenu>({});
+  const [selectedMenu, setSelectedMenu] = useState<SelectedMenu>(
+    {} as SelectedMenu
+  );
 
   const menuContextAction = useMemo(
     () => ({
